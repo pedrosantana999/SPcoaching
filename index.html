@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Allenati con me – SP Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #0d0d0d;
+  --header: #141414;
+  --surface: #1a1a1a;
+  --line: #2e2e2e;
+  --text: #f4f4f1;
+  --muted: #a9a9a3;
+  --lime: #c8f53a;
+  --no: #ff6b6b;
+  --on-lime: #0d0d0d;
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-text-size-adjust: 100%; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--header); z-index: 10; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+a:focus-visible, .btn:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Intestazione fissa */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--header); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.logo { font-family: var(--display); font-weight: 700; font-size: 26px; text-transform: uppercase; letter-spacing: .02em; color: var(--text); text-decoration: none; }
+.logo b { color: var(--lime); }
+.top nav { display: flex; gap: 18px; }
+.top nav a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 15px; }
+.top nav a:hover { color: var(--lime); }
+
+/* Hero */
+.hero { padding: 52px 0 44px; border-bottom: 1px solid var(--line); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(56px, 17vw, 108px); line-height: .92; margin: 0 0 20px; text-transform: uppercase; }
+.lead { font-size: 20px; color: var(--muted); margin: 0 0 30px; max-width: 30ch; }
+.choices { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; padding: 12px 22px; border: 2px solid var(--lime); color: var(--text); text-decoration: none; font-weight: 600; border-radius: 6px; background: transparent; font-size: 16px; }
+.btn:hover { background: var(--lime); color: var(--on-lime); }
+
+/* Sezioni */
+section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+h2 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 9vw, 48px); line-height: 1; margin: 0 0 22px; text-transform: uppercase; }
+h3 { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.1; margin: 34px 0 14px; text-transform: uppercase; color: var(--lime); }
+p { margin: 0 0 14px; max-width: 62ch; }
+
+/* Schede pacchetto */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px 22px; }
+.card.main { border: 2px solid var(--lime); }
+.card h3.title { margin: 0 0 8px; font-size: clamp(28px, 8vw, 36px); }
+.card .sub { color: var(--muted); margin: 0 0 20px; }
+.card .who { margin: 0 0 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.card .who b { display: block; margin-bottom: 4px; }
+ul.list { list-style: none; margin: 0; padding: 0; }
+ul.list li { position: relative; padding: 0 0 12px 34px; }
+ul.list li:last-child { padding-bottom: 0; }
+ul.list li::before { position: absolute; left: 0; top: 0; font-weight: 700; font-size: 20px; line-height: 1.4; }
+ul.list li.yes::before { content: "\2713"; color: var(--lime); }
+ul.list li.no { color: var(--no); }
+ul.list li.no::before { content: "\2717"; color: var(--no); }
+.card .closing-note { margin: 22px 0 0; color: var(--muted); font-size: 16px; }
+
+/* Passaggi */
+ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+ol.steps li { counter-increment: s; position: relative; padding: 0 0 22px 56px; margin: 0; }
+ol.steps li::before { content: counter(s); position: absolute; left: 0; top: -2px; width: 38px; height: 38px; display: grid; place-items: center; border: 2px solid var(--lime); border-radius: 50%; font-family: var(--display); font-weight: 700; font-size: 20px; color: var(--lime); }
+ol.steps li::after { content: ""; position: absolute; left: 18px; top: 40px; bottom: 4px; width: 2px; background: var(--line); }
+ol.steps li:last-child { padding-bottom: 0; }
+ol.steps li:last-child::after { display: none; }
+ol.steps strong { display: block; font-size: 18px; margin-bottom: 2px; }
+ol.steps span { color: var(--muted); }
+
+/* Approccio */
+ul.approach { list-style: none; margin: 0; padding: 0; }
+ul.approach li { background: var(--surface); border-left: 3px solid var(--lime); padding: 14px 16px; margin-bottom: 12px; border-radius: 0 8px 8px 0; }
+ul.approach b { display: block; }
+ul.approach span { color: var(--muted); }
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-top: 28px; }
+.note p { margin: 0; }
+
+/* Prezzi */
+.prices { display: grid; gap: 14px; }
+.price { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+.price.hl { border: 2px solid var(--lime); }
+.price .term { font-weight: 600; font-size: 19px; margin: 0 0 6px; }
+.price .amount { font-family: var(--display); font-weight: 700; font-size: 54px; line-height: 1; color: var(--lime); margin: 0 0 8px; }
+.price .amount.small { font-size: 32px; }
+.price .how { color: var(--muted); margin: 0; font-size: 16px; }
+.price .how + .how { margin-top: 2px; }
+.sep { font-family: var(--display); font-weight: 700; font-size: 24px; text-transform: uppercase; color: var(--lime); margin: 34px 0 14px; }
+.sep:first-of-type { margin-top: 0; }
+
+/* Confronto */
+.u { text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: .08em; text-underline-offset: .12em; }
+.cmp { margin-top: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.cmp table { width: 100%; border-collapse: collapse; font-size: 15px; table-layout: fixed; }
+.cmp th, .cmp td { text-align: left; padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: anywhere; }
+.cmp thead th { font-family: var(--display); font-size: 20px; text-transform: uppercase; color: var(--lime); border-bottom: 2px solid var(--lime); line-height: 1.1; }
+.cmp tbody th { font-weight: 600; width: 34%; }
+.cmp tbody tr:last-child th, .cmp tbody tr:last-child td { border-bottom: 0; }
+
+/* Regolamento */
+.rules details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+.rules summary { cursor: pointer; list-style: none; padding: 16px 52px 16px 20px; font-weight: 600; font-size: 18px; position: relative; }
+.rules summary::-webkit-details-marker { display: none; }
+.rules summary::after { content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-family: var(--display); font-size: 30px; color: var(--lime); line-height: 1; }
+.rules details[open] summary::after { content: "\2212"; }
+.rules details[open] { border-color: var(--lime); }
+.rules summary:focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; border-radius: 12px; }
+.rules .body { padding: 0 20px 18px; }
+.rules .body ul { margin: 0; padding-left: 20px; }
+.rules .body li { margin-bottom: 8px; }
+.rules .body p { margin: 0; }
+.accept { margin-top: 22px; color: var(--muted); }
+.closing { border-bottom: 0; padding-bottom: 72px; }
+.closing p { font-size: 20px; }
+footer { padding: 0 0 36px; color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <a class="logo" href="#"><b>SP</b> Coaching</a>
+    <nav aria-label="Menu">
+      <a href="#servizi">Servizi</a>
+      <a href="#prezzi">Prezzi</a>
+      <a href="#regolamento">Regolamento</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Allenati <span class="u">con me</span></h1>
+    <p class="lead">Due modi per avere un allenamento costruito su di te.</p>
+    <div class="choices">
+      <a class="btn" href="#coaching">Coaching online</a>
+      <a class="btn" href="#solo-scheda">Solo scheda</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="approccio">
+  <div class="wrap">
+    <h2>Il mio approccio</h2>
+    <ul class="approach">
+      <li><b>Niente schede copia-incolla</b><span>Esercizi, volume e frequenza sono scelti in base a te.</span></li>
+      <li><b>Progressi misurati</b><span>Ogni allenamento viene registrato, così vediamo nero su bianco quanto migliori.</span></li>
+      <li><b>Tecnica prima del carico</b><span>Si progredisce solo quando il movimento è pulito.</span></li>
+      <li><b>Adattamento continuo</b><span>Se una settimana va male, la scheda si adatta, non il contrario.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="servizi">
+  <div class="wrap">
+    <h2 id="coaching">Coaching online</h2>
+    <div class="card main">
+      <h3 class="title">Percorso completo seguito</h3>
+      <p class="sub">Ti seguo settimana dopo settimana e penso io a carichi e progressioni.</p>
+      <p class="who"><b>A chi è rivolto</b>A chi vuole iniziare ad allenarsi nel modo giusto e a chi si allena già ma sente di essere fermo. Che il tuo obiettivo sia diventare più forte, mettere massa, perdere grasso o arrivare ai primi traguardi a corpo libero, il percorso parte da dove sei tu.</p>
+      <ul class="list">
+        <li class="yes"><span class="sr">Incluso: </span>Anamnesi iniziale</li>
+        <li class="yes"><span class="sr">Incluso: </span>Test di forza iniziali</li>
+        <li class="yes"><span class="sr">Incluso: </span>Scheda personalizzata, aggiornata ogni settimana</li>
+        <li class="yes"><span class="sr">Incluso: </span>Carichi e progressioni gestiti da me</li>
+        <li class="yes"><span class="sr">Incluso: </span>Chat Telegram per domande e dubbi, risposta entro 24 ore</li>
+        <li class="yes"><span class="sr">Incluso: </span>Correzione video degli esercizi</li>
+        <li class="yes"><span class="sr">Incluso: </span>Istruzioni personalizzate per ogni scheda</li>
+        <li class="yes"><span class="sr">Incluso: </span>Consigli alimentari generali</li>
+      </ul>
+    </div>
+
+    <h3>Come funziona</h3>
+    <ol class="steps">
+      <li><strong>Anamnesi</strong><span>Mi racconti obiettivi, disponibilità, esperienza, eventuali dolori e abitudini.</span></li>
+      <li><strong>Test di forza</strong><span>Nella prima settimana misuriamo il tuo livello sugli esercizi fondamentali, così partiamo da numeri reali.</span></li>
+      <li><strong>Scheda personalizzata</strong><span>Ricevi una scheda condivisa con me, costruita sul tuo obiettivo e sul tempo che hai.</span></li>
+      <li><strong>Aggiornamento ogni settimana</strong><span>Dopo ogni allenamento segni carichi, ripetizioni e fatica. Ogni settimana analizzo i tuoi dati e aggiorno carichi e progressioni.</span></li>
+      <li><strong>Sempre in contatto</strong><span>Per dubbi e domande mi scrivi in chat e ti rispondo entro 24 ore. Mi mandi i video degli esercizi e ti correggo la tecnica.</span></li>
+    </ol>
+
+    <div class="note">
+      <p><b>Cosa ti chiedo.</b> Costanza, e compilare la scheda dopo ogni allenamento: bastano un paio di minuti. Al resto penso io.</p>
+    </div>
+  </div>
+</section>
+
+<section id="solo-scheda">
+  <div class="wrap">
+    <h2>Solo scheda</h2>
+    <div class="card">
+      <h3 class="title">Scheda personalizzata</h3>
+      <p class="sub">Per chi si allena in autonomia e vuole una programmazione fatta bene, senza essere seguito ogni settimana.</p>
+      <ul class="list">
+        <li class="yes"><span class="sr">Incluso: </span>Anamnesi iniziale</li>
+        <li class="yes"><span class="sr">Incluso: </span>Una scheda personalizzata da seguire per 12 settimane</li>
+        <li class="yes"><span class="sr">Incluso: </span>Istruzioni personalizzate, con le regole per progredire</li>
+        <li class="yes"><span class="sr">Incluso: </span>Chat Telegram solo la prima settimana, per chiarimenti sulla scheda</li>
+        <li class="no"><span class="sr">Non incluso: </span>Test di forza iniziali</li>
+        <li class="no"><span class="sr">Non incluso: </span>Gestione di carichi e progressioni: li gestisci tu seguendo le istruzioni</li>
+        <li class="no"><span class="sr">Non incluso: </span>Correzione video degli esercizi</li>
+        <li class="no"><span class="sr">Non incluso: </span>Consigli alimentari generali</li>
+      </ul>
+    </div>
+
+    <h3>Come funziona</h3>
+    <ol class="steps">
+      <li><strong>Anamnesi</strong><span>Mi racconti obiettivi, disponibilità, esperienza ed eventuali dolori.</span></li>
+      <li><strong>Scheda personalizzata</strong><span>Ricevi una scheda costruita su di te, da seguire per 12 settimane.</span></li>
+      <li><strong>Istruzioni personalizzate</strong><span>Insieme alla scheda ricevi le istruzioni scritte per te: come eseguire gli esercizi, come riscaldarti e come trovare i carichi giusti e aumentarli nel modo corretto. Così progredisci in autonomia.</span></li>
+      <li><strong>Dubbi sulla scheda</strong><span>Nella prima settimana puoi scrivermi su Telegram per chiarire qualsiasi punto della scheda.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="confronto">
+  <div class="wrap">
+    <h2>Coaching o solo scheda?</h2>
+    <div class="cmp">
+      <table>
+        <thead>
+          <tr><th scope="col"><span class="sr">Servizio</span></th><th scope="col">Coaching online</th><th scope="col">Solo scheda</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Anamnesi iniziale</th><td>Sì</td><td>Sì</td></tr>
+          <tr><th scope="row">Test di forza iniziali</th><td>Sì</td><td>No</td></tr>
+          <tr><th scope="row">Scheda personalizzata</th><td>Sì, aggiornata ogni settimana</td><td>Sì, una scheda per 12 settimane</td></tr>
+          <tr><th scope="row">Gestione di carichi e progressioni</th><td>Sì, la gestisco io</td><td>No, la gestisci tu seguendo le istruzioni</td></tr>
+          <tr><th scope="row">Chat Telegram per domande e dubbi</th><td>Sì, risposta entro 24 ore</td><td>Solo la prima settimana, per chiarimenti sulla scheda</td></tr>
+          <tr><th scope="row">Correzione video degli esercizi</th><td>Sì</td><td>No</td></tr>
+          <tr><th scope="row">Istruzioni per la scheda</th><td>Personalizzate per ogni scheda</td><td>Personalizzate, con le regole per progredire</td></tr>
+          <tr><th scope="row">Consigli alimentari generali</th><td>Sì</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="prezzi">
+  <div class="wrap">
+    <h2>Pacchetti e prezzi</h2>
+
+    <p class="sep">Coaching online</p>
+    <div class="prices">
+      <div class="price">
+        <p class="term">3 mesi</p>
+        <p class="amount">169 €</p>
+        <p class="how">Pagamento unico</p>
+      </div>
+      <div class="price hl">
+        <p class="term">6 mesi</p>
+        <p class="amount">299 €</p>
+        <p class="how">Pagamento unico</p>
+        <p class="how">Oppure 2 rate da 159 €</p>
+      </div>
+      <div class="price">
+        <p class="term">12 mesi</p>
+        <p class="amount">549 €</p>
+        <p class="how">Pagamento unico</p>
+        <p class="how">Oppure 3 rate da 195 €</p>
+      </div>
+    </div>
+
+    <p class="sep">Solo scheda</p>
+    <div class="prices">
+      <div class="price">
+        <p class="term">Scheda personalizzata, 12 settimane</p>
+        <p class="amount">49,99 €</p>
+        <p class="how">Pagamento unico</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="regolamento" class="rules">
+  <div class="wrap">
+    <h2>Regolamento del servizio</h2>
+    <p>Leggilo prima di iniziare: serve a chiarire cosa è incluso, come funzionano i pagamenti e cosa ci impegniamo a fare entrambi. Vale per il coaching online e per la scheda personalizzata.</p>
+
+    <details>
+      <summary>Cosa è incluso</summary>
+      <div class="body">
+        <p>Il dettaglio di ciò che è incluso in ogni servizio lo trovi nelle schede qui sopra. I consigli alimentari sono indicazioni generali e non sostituiscono un piano alimentare personalizzato, che può essere redatto solo da un nutrizionista, un dietista o un medico.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Pagamenti</summary>
+      <div class="body">
+        <ul>
+          <li>I prezzi sono quelli indicati qui sopra per il pacchetto scelto.</li>
+          <li>Il pagamento è anticipato: il percorso inizia dopo il pagamento, o dopo la prima rata.</li>
+          <li>Le rate successive si pagano all’inizio del periodo che coprono: per il pacchetto da 6 mesi all’inizio del terzo mese, per quello da 12 mesi all’inizio del quarto e dell’ottavo mese.</li>
+          <li>Se una rata non viene pagata, il servizio resta sospeso finché non viene saldata.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Durata, pause e interruzione</summary>
+      <div class="body">
+        <ul>
+          <li>Il percorso inizia dal giorno in cui ricevi la prima scheda e dura per il periodo del pacchetto scelto. Non c’è rinnovo automatico: alla scadenza decidi tu se continuare.</li>
+          <li>In caso di infortunio, malattia o altri motivi seri puoi chiedere di sospendere il percorso fino a 2 settimane: la scadenza si sposta dello stesso periodo.</li>
+          <li>Se decidi di interrompere prima della fine, le quote già pagate non vengono rimborsate e le rate restanti del pacchetto scelto restano dovute, salvo quanto previsto dalla legge.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Comunicazione</summary>
+      <div class="body">
+        <ul>
+          <li>Rispondo ai messaggi entro 24 ore.</li>
+          <li>Ogni settimana guardo i dati che hai inserito nella scheda e la aggiorno: più sei preciso nel compilarla, più la programmazione sarà adatta a te.</li>
+          <li>Per urgenze mediche non scrivere a me: rivolgiti al tuo medico o ai servizi di emergenza.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>I tuoi impegni</summary>
+      <div class="body">
+        <ul>
+          <li>Compilare la scheda dopo ogni allenamento (carichi, ripetizioni, RPE, note).</li>
+          <li>Nel coaching online, mandarmi entro il sabato sera le foto dei test e i video degli esercizi da correggere.</li>
+          <li>Nel coaching online, completare la scheda entro la domenica: senza i tuoi dati non posso creare la scheda nuova.</li>
+          <li>Seguire il programma come indicato, senza cambiare esercizi o carichi di tua iniziativa.</li>
+          <li>Avvisarmi subito in caso di dolori, infortuni o cambiamenti nella tua salute.</li>
+          <li>Avvisarmi se per un periodo non potrai allenarti.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Salute e responsabilità</summary>
+      <div class="body">
+        <ul>
+          <li>Prima di iniziare è consigliato un certificato medico per attività sportiva non agonistica. Se hai patologie, stai assumendo farmaci o hai avuto infortuni, parlane prima con il tuo medico.</li>
+          <li>Non sono un medico né un fisioterapista: il mio lavoro è l’allenamento. Se durante un esercizio senti dolore, fermati e contatta un medico.</li>
+          <li>Ti alleni sotto la tua responsabilità, rispettando le indicazioni ricevute e le regole della palestra che frequenti.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Foto, dati e privacy</summary>
+      <div class="body">
+        <ul>
+          <li>Foto, misure e dati che mi mandi servono solo a seguire il tuo percorso e restano privati.</li>
+          <li>Non pubblico nulla (foto, video, risultati o recensioni) senza il tuo consenso scritto. Puoi ritirare il consenso quando vuoi.</li>
+          <li>Alla fine del percorso puoi chiedermi di cancellare i tuoi dati e le tue foto.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Materiale</summary>
+      <div class="body">
+        <p>Schede, guide e documenti che ricevi sono per uso personale: non vanno condivisi, pubblicati o rivenduti.</p>
+      </div>
+    </details>
+
+    <p class="accept">Iniziando il percorso confermi di aver letto e accettato questo regolamento.</p>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Per iniziare</h2>
+    <p>Scegli il servizio e scrivimi. Ti mando il regolamento e partiamo.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">SP Coaching</div>
+</footer>
+
+</body>
+</html>
